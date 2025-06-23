@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assists / Minute Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="assistsChart"></canvas>
+
+    <script>
+        const players = ["PR0J", "DareDevilMoon", "Dugong", "Nemesis", "nomlfir", "kwago", "Annihilation", "DeadManWalking", "Barracuda",
+            "emma", "Gnome", "Tartarosk", "Ggglygy", "Dean", "TribalChief", "Tumi", "Torment", "Darkness93",
+            "CheezeCaek", "Wriggles", "Bag", "Goshawk", "waffleking", "SulliedSoc", "Bored", "Ryan (sub)", "NyaN",
+            "Lange", "Mikesters", "Izza", "Kenxai", "OperationsCats (sub)", "Buschguy", "Booleanaire", "Hitch",
+            "Mansku", "shadowwalker140i", "Hanosandy", "Zato", "ColonelFatso", "RebelTrooper", "Beldark", "Hawxter",
+            "Annaberries", "Panda", "LethalScout", "gotlub", "howsya", "Tritium Jones", "snakke", "Jive", "Franchez",
+            "björnbär", "_oahra", "HC_Joker", "Kadenzah", "Pablo Sexcrowbar", "freefood", "big jim", "BakaToma",
+            "Prizzo", "pLayb0x", "Mikea(x2)", "sajent", "Nykie4life", "GreenRain", "Def_Monk", "Tears", "XRY",
+            "Cryof", "Zao", "Nightstar", "cym3", "Simmons", "realhumanbeing"];
+        const assists_minute = [1.359, 0.616, 1.544, 0.333, 1.593, 1.275, 0.241, 0.432, 0.836,
+            0.510, 1.153, 1.515, 1.175, 1.042, 1.035, 1.323, 0.584, 0.406,
+            1.047, 0.885, 1.152, 0.914, 0.780, 0.666, 0.447, 0.266, 0.866,
+            0.561, 1.261, 1.261, 1.278, 0.526, 1.362, 0.994, 0.122, 0.346,
+            1.160, 0.976, 0.505, 0.999, 1.322, 1.028, 1.175, 0.928, 1.099,
+            0.875, 0.517, 0.799, 0.959, 0.641, 1.561, 1.215, 1.399, 1.020,
+            0.914, 0.881, 0.390, 1.246, 0.983, 1.255, 0.958, 0.602, 0.907,
+            0.932, 0.237, 0.534, 0.519, 0.936, 0.881, 1.001, 0.825, 1.131,
+            1.112, 0.677, 1.270];
+
+        const ctxAssists = document.getElementById('assistsChart').getContext('2d');
+        new Chart(ctxAssists, {
+            type: 'scatter',
+            data: {
+                labels: players,
+                datasets: [{
+                    label: 'Assists / Minute',
+                    data: assists_minute.map((v, i) => ({ x: i, y: v })),
+                    backgroundColor: players.map((_, i) => `hsl(${i * 360 / players.length}, 70%, 50%)`),
+                    borderColor: players.map((_, i) => `hsl(${i * 360 / players.length}, 70%, 30%)`),
+                    borderWidth: 1,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Players' }, ticks: { callback: (i) => players[i], maxRotation: 90, minRotation: 90 } },
+                    y: { title: { display: true, text: 'Assists / Minute' }, beginAtZero: true, suggestedMax: 1.7 }
+                },
+                plugins: {
+                    tooltip: { callbacks: { label: (context) => `${players[context.raw.x]}: ${context.raw.y}` } },
+                    legend: { display: false }
+                },
+                maintainAspectRatio: false,
+                responsive: true
+            }
+        });
+    </script>
+</body>
+</html>

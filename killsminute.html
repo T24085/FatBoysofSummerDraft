@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kills / Minute Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="killsChart"></canvas>
+
+    <script>
+        const players = ["PR0J", "DareDevilMoon", "Dugong", "Nemesis", "nomlfir", "kwago", "Annihilation", "DeadManWalking", "Barracuda",
+            "emma", "Gnome", "Tartarosk", "Ggglygy", "Dean", "TribalChief", "Tumi", "Torment", "Darkness93",
+            "CheezeCaek", "Wriggles", "Bag", "Goshawk", "waffleking", "SulliedSoc", "Bored", "Ryan (sub)", "NyaN",
+            "Lange", "Mikesters", "Izza", "Kenxai", "OperationsCats (sub)", "Buschguy", "Booleanaire", "Hitch",
+            "Mansku", "shadowwalker140i", "Hanosandy", "Zato", "ColonelFatso", "RebelTrooper", "Beldark", "Hawxter",
+            "Annaberries", "Panda", "LethalScout", "gotlub", "howsya", "Tritium Jones", "snakke", "Jive", "Franchez",
+            "björnbär", "_oahra", "HC_Joker", "Kadenzah", "Pablo Sexcrowbar", "freefood", "big jim", "BakaToma",
+            "Prizzo", "pLayb0x", "Mikea(x2)", "sajent", "Nykie4life", "GreenRain", "Def_Monk", "Tears", "XRY",
+            "Cryof", "Zao", "Nightstar", "cym3", "Simmons", "realhumanbeing"];
+        const kills_minute = [1.579, 0.715, 1.806, 0.297, 1.806, 0.751, 0.234, 0.616, 0.397,
+            0.333, 1.323, 1.648, 1.493, 1.315, 2.121, 1.264, 0.333, 0.236,
+            1.722, 0.980, 0.790, 0.904, 1.799, 0.523, 0.752, 0.257, 0.695,
+            0.479, 1.289, 1.454, 1.617, 1.402, 1.132, 1.197, 0.095, 0.086,
+            0.690, 0.718, 0.353, 0.635, 1.974, 0.964, 0.917, 1.234, 1.616,
+            0.787, 0.423, 0.814, 1.310, 0.401, 1.171, 1.260, 1.935, 0.953,
+            1.360, 0.708, 0.268, 1.170, 1.695, 1.077, 1.187, 0.670, 1.212,
+            0.763, 0.076, 0.763, 0.454, 1.455, 1.483, 1.567, 0.445, 1.251,
+            0.732, 0.695, 0.871];
+
+        const ctxKills = document.getElementById('killsChart').getContext('2d');
+        new Chart(ctxKills, {
+            type: 'scatter',
+            data: {
+                labels: players,
+                datasets: [{
+                    label: 'Kills / Minute',
+                    data: kills_minute.map((v, i) => ({ x: i, y: v })),
+                    backgroundColor: players.map((_, i) => `hsl(${i * 360 / players.length}, 70%, 50%)`),
+                    borderColor: players.map((_, i) => `hsl(${i * 360 / players.length}, 70%, 30%)`),
+                    borderWidth: 1,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Players' }, ticks: { callback: (i) => players[i], maxRotation: 90, minRotation: 90 } },
+                    y: { title: { display: true, text: 'Kills / Minute' }, beginAtZero: true, suggestedMax: 2.5 }
+                },
+                plugins: {
+                    tooltip: { callbacks: { label: (context) => `${players[context.raw.x]}: ${context.raw.y}` } },
+                    legend: { display: false }
+                },
+                maintainAspectRatio: false,
+                responsive: true
+            }
+        });
+    </script>
+</body>
+</html>
