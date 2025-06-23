@@ -79,6 +79,9 @@
         .category-title {
             text-shadow: 0 0 8px #ff6f61, 0 0 16px #ffcc5c;
         }
+        .credit-note {
+            text-shadow: 0 0 8px #ff6f61, 0 0 16px #ffcc5c;
+        }
     </style>
 </head>
 <body class="text-white min-h-screen">
@@ -90,6 +93,7 @@
             {
                 category: "Overview",
                 items: [
+                    { name: "Main Document", url: "https://docs.google.com/spreadsheets/d/1M5dJfcEiItfreB-Ohi5TjncRmc-JFBPbetRbRT1ixZs/edit?gid=2039709796#gid=2039709796" },
                     { name: "Team Performance", url: "https://t24085.github.io/FatBoysofSummerDraft/TeamPerformance" }
                 ]
             },
@@ -168,6 +172,9 @@
         const Dashboard = () => {
             return (
                 <div className="container mx-auto p-8">
+                    <p className="text-xl text-center mb-4 text-orange-200 credit-note">
+                        Special thanks to Twin for 18 hours of dedicated work on the Main Document!
+                    </p>
                     <h1 className="text-5xl font-extrabold text-center mb-12 text-orange-200 pulse-animation category-title">
                         Fat Boys of Summer Draft Dashboard
                     </h1>
