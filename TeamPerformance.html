@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Stats Bar Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="teamStatsChart"></canvas>
+
+    <script>
+        const teams = ["PR0J", "emma", "CheezeCaek", "Lange", "Zato", "Tritium Jones", "freefood", "Def_Monk"];
+        const teamScores = [211100, 309570, 179060, 182145, 292495, 336600, 216175, 171075]; // Sum of Score per team
+        const teamKills = [1082, 1335, 770, 771, 1215, 1334, 818, 777]; // Sum of Kills per team
+        const teamAssists = [1051, 1231, 647, 714, 1115, 1197, 690, 771]; // Sum of Assists per team
+        const teamCaptures = [28, 28, 15, 10, 26, 32, 14, 5]; // Sum of Captures per team
+        const teamReturns = [156, 134, 92, 99, 179, 173, 113, 99]; // Sum of Returns per team
+
+        const ctx = document.getElementById('teamStatsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: teams,
+                datasets: [
+                    {
+                        label: 'Score',
+                        data: teamScores,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        yAxisID: 'y-score'
+                    },
+                    {
+                        label: 'Kills',
+                        data: teamKills,
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        yAxisID: 'y-other'
+                    },
+                    {
+                        label: 'Assists',
+                        data: teamAssists,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        yAxisID: 'y-other'
+                    },
+                    {
+                        label: 'Captures',
+                        data: teamCaptures,
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        yAxisID: 'y-other'
+                    },
+                    {
+                        label: 'Returns',
+                        data: teamReturns,
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        yAxisID: 'y-other'
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Teams' }, ticks: { maxRotation: 45, minRotation: 45 } },
+                    'y-score': {
+                        type: 'linear',
+                        position: 'right',
+                        title: { display: true, text: 'Score' },
+                        beginAtZero: true,
+                        suggestedMax: 400000,
+                        grid: { drawOnChartArea: false } // Avoid overlapping grid lines
+                    },
+                    'y-other': {
+                        type: 'linear',
+                        position: 'left',
+                        title: { display: true, text: 'Kills, Assists, Captures, Returns' },
+                        beginAtZero: true,
+                        suggestedMax: 1500,
+                        grid: { drawOnChartArea: true } // Main grid lines
+                    }
+                },
+                plugins: {
+                    tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${context.raw}` } },
+                    legend: { position: 'top' }
+                },
+                maintainAspectRatio: false,
+                responsive: true
+            }
+        });
+    </script>
+</body>
+</html>

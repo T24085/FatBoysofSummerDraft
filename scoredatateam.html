@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Distribution by Team (Score)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="positionChart"></canvas>
+
+    <script>
+        const teams = ["PR0J", "emma", "CheezeCaek", "Lange", "Zato", "Tritium Jones", "freefood", "Def_Monk"];
+        const scoreData = {
+            LD: [88815, 67235, 49241, 62230, 47455, 117255, 68435, 69975],
+            "Roam D": [83755, 54200, 10508, 56780, 94675, 17936, 11797, 10788],
+            HoF: [52840, 51670, 10508, 10865, 39125, 55400, 33550, 23360],
+            Offense: [24810, 119425, 38752, 57788, 202565, 109879, 101060, 98665],
+            Capper: [59935, 36710, 25750, 27482, 123845, 93510, 80360, 56170]
+        };
+
+        const ctx = document.getElementById('positionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: teams,
+                datasets: [
+                    {
+                        label: 'LD',
+                        data: scoreData.LD,
+                        backgroundColor: `hsl(${0 * 72}, 70%, 50%)`, // Cyan
+                        borderColor: `hsl(${0 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Roam D',
+                        data: scoreData["Roam D"],
+                        backgroundColor: `hsl(${1 * 72}, 70%, 50%)`, // Red
+                        borderColor: `hsl(${1 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'HoF',
+                        data: scoreData.HoF,
+                        backgroundColor: `hsl(${2 * 72}, 70%, 50%)`, // Blue
+                        borderColor: `hsl(${2 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Offense',
+                        data: scoreData.Offense,
+                        backgroundColor: `hsl(${3 * 72}, 70%, 50%)`, // Yellow
+                        borderColor: `hsl(${3 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Capper',
+                        data: scoreData.Capper,
+                        backgroundColor: `hsl(${4 * 72}, 70%, 50%)`, // Purple
+                        borderColor: `hsl(${4 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Teams' }, ticks: { maxRotation: 45, minRotation: 45 } },
+                    y: {
+                        title: { display: true, text: 'Total Score' },
+                        beginAtZero: true,
+                        suggestedMax: 250000,
+                        ticks: { callback: value => Number.isInteger(value) ? value : null }
+                    }
+                },
+                plugins: {
+                    tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${context.raw}` } },
+                    legend: { position: 'top' }
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                barPercentage: 0.9, // Adjust bar width to avoid overlap
+                categoryPercentage: 0.8 // Adjust category spacing
+            }
+        });
+    </script>
+</body>
+</html>
