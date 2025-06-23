@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Distribution by Team (Captures)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="positionChart"></canvas>
+
+    <script>
+        const teams = ["PR0J", "emma", "CheezeCaek", "Lange", "Zato", "Tritium Jones", "freefood", "Def_Monk"];
+        const captureData = {
+            LD: [5, 5, 0, 1, 0, 1, 3, 1],
+            "Roam D": [5, 2, 6, 7, 0, 4, 0, 1],
+            HoF: [5, 9, 1, 3, 0, 8, 4, 1],
+            Offense: [1, 5, 1, 2, 1, 6, 4, 3],
+            Capper: [13, 8, 7, 2, 15, 13, 3, 2]
+        };
+
+        const ctx = document.getElementById('positionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: teams,
+                datasets: [
+                    {
+                        label: 'LD',
+                        data: captureData.LD,
+                        backgroundColor: `hsl(${0 * 72}, 70%, 50%)`, // Cyan
+                        borderColor: `hsl(${0 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Roam D',
+                        data: captureData["Roam D"],
+                        backgroundColor: `hsl(${1 * 72}, 70%, 50%)`, // Red
+                        borderColor: `hsl(${1 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'HoF',
+                        data: captureData.HoF,
+                        backgroundColor: `hsl(${2 * 72}, 70%, 50%)`, // Blue
+                        borderColor: `hsl(${2 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Offense',
+                        data: captureData.Offense,
+                        backgroundColor: `hsl(${3 * 72}, 70%, 50%)`, // Yellow
+                        borderColor: `hsl(${3 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Capper',
+                        data: captureData.Capper,
+                        backgroundColor: `hsl(${4 * 72}, 70%, 50%)`, // Purple
+                        borderColor: `hsl(${4 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Teams' }, ticks: { maxRotation: 45, minRotation: 45 } },
+                    y: {
+                        title: { display: true, text: 'Total Captures' },
+                        beginAtZero: true,
+                        suggestedMax: 20,
+                        ticks: { callback: value => Number.isInteger(value) ? value : null }
+                    }
+                },
+                plugins: {
+                    tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${context.raw}` } },
+                    legend: { position: 'top' }
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                barPercentage: 0.9, // Adjust bar width to avoid overlap
+                categoryPercentage: 0.8 // Adjust category spacing
+            }
+        });
+    </script>
+</body>
+</html>

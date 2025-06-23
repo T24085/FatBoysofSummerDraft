@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Distribution by Team (Kills)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="positionChart"></canvas>
+
+    <script>
+        const teams = ["PR0J", "emma", "CheezeCaek", "Lange", "Zato", "Tritium Jones", "freefood", "Def_Monk"];
+        const killData = {
+            LD: [329, 211, 278, 175, 164, 445, 266, 317],
+            "Roam D": [311, 287, 103, 218, 409, 347, 117, 79],
+            HoF: [255, 223, 181, 158, 156, 226, 138, 94],
+            Offense: [87, 551, 265, 301, 931, 515, 467, 379],
+            Capper: [176, 90, 155, 79, 589, 249, 231, 292]
+        };
+
+        const ctx = document.getElementById('positionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: teams,
+                datasets: [
+                    {
+                        label: 'LD',
+                        data: killData.LD,
+                        backgroundColor: `hsl(${0 * 72}, 70%, 50%)`, // Cyan
+                        borderColor: `hsl(${0 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Roam D',
+                        data: killData["Roam D"],
+                        backgroundColor: `hsl(${1 * 72}, 70%, 50%)`, // Red
+                        borderColor: `hsl(${1 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'HoF',
+                        data: killData.HoF,
+                        backgroundColor: `hsl(${2 * 72}, 70%, 50%)`, // Blue
+                        borderColor: `hsl(${2 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Offense',
+                        data: killData.Offense,
+                        backgroundColor: `hsl(${3 * 72}, 70%, 50%)`, // Yellow
+                        borderColor: `hsl(${3 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Capper',
+                        data: killData.Capper,
+                        backgroundColor: `hsl(${4 * 72}, 70%, 50%)`, // Purple
+                        borderColor: `hsl(${4 * 72}, 70%, 30%)`,
+                        borderWidth: 1,
+                        pointRadius: 5
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'Teams' }, ticks: { maxRotation: 45, minRotation: 45 } },
+                    y: {
+                        title: { display: true, text: 'Total Kills' },
+                        beginAtZero: true,
+                        suggestedMax: 1000,
+                        ticks: { callback: value => Number.isInteger(value) ? value : null }
+                    }
+                },
+                plugins: {
+                    tooltip: { callbacks: { label: (context) => `${context.dataset.label}: ${context.raw}` } },
+                    legend: { position: 'top' }
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                barPercentage: 0.9, // Adjust bar width to avoid overlap
+                categoryPercentage: 0.8 // Adjust category spacing
+            }
+        });
+    </script>
+</body>
+</html>
