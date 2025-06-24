@@ -25,11 +25,11 @@
 
     <script>
         const teams = ["PR0J", "emma", "CheezeCaek", "Lange", "Zato", "Tritium Jones", "freefood", "Def_Monk"];
-        const teamScores = [211100, 309570, 179060, 182145, 292495, 336600, 216175, 171075]; // Sum of Score per team
-        const teamKills = [1082, 1335, 770, 771, 1215, 1334, 818, 777]; // Sum of Kills per team
-        const teamAssists = [1051, 1231, 647, 714, 1115, 1197, 690, 771]; // Sum of Assists per team
-        const teamCaptures = [28, 28, 15, 10, 26, 32, 14, 5]; // Sum of Captures per team
-        const teamReturns = [156, 134, 92, 99, 179, 173, 113, 99]; // Sum of Returns per team
+        const teamScores = [310155, 329240, 217960, 230425, 377990, 419585, 245140, 223970];
+        const teamKills = [1158, 1362, 885, 938, 1540, 1680, 916, 966];
+        const teamAssists = [1162, 1183, 738, 970, 1456, 1611, 903, 901];
+        const teamCaptures = [29, 29, 16, 13, 28, 37, 17, 9];
+        const teamReturns = [156, 140, 110, 110, 177, 183, 117, 94];
 
         const ctx = document.getElementById('teamStatsChart').getContext('2d');
         new Chart(ctx, {
@@ -77,16 +77,16 @@
                         position: 'right',
                         title: { display: true, text: 'Score' },
                         beginAtZero: true,
-                        suggestedMax: 400000,
-                        grid: { drawOnChartArea: false } // Avoid overlapping grid lines
+                        suggestedMax: 500000,
+                        grid: { drawOnChartArea: false }
                     },
                     'y-other': {
                         type: 'linear',
                         position: 'left',
                         title: { display: true, text: 'Kills, Assists, Captures, Returns' },
                         beginAtZero: true,
-                        suggestedMax: 1500,
-                        grid: { drawOnChartArea: true } // Main grid lines
+                        suggestedMax: 2000,
+                        grid: { drawOnChartArea: true }
                     }
                 },
                 plugins: {
